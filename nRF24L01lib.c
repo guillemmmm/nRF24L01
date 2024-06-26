@@ -5,20 +5,8 @@
 *	SPI_send (uint8_t count, uint8t *TxBuf, uint8_t *RxBuf);
 */
 #include "nRF24L01lib.h"
-//#include <xdc/runtime/System.h>
-//#include <xdc/cfg/global.h>
 
-#include "mkii.h"
-
-//#include <ti/drivers/GPIO.h>
-//#include "ti_drivers_config.h" //myboard
-
-#define RF_CH 0x07
-
-//#define  nRF24L01_CSN(false) GPIO_write(CSN,0)
-//#define  nRF24L01_CSN(true) GPIO_write(CSN,1)
-//#define  nRF24L01_CE(false) GPIO_write(CE,0)
-//#define  nRF24L01_CE(true) GPIO_write(CE,1)
+#define RF_CH 0x07 // RF Chanel, to choose by the user
 
 //-----------------------------------------------------------------------------------------------------------//
 void nRF24L01_init(void)
