@@ -6,6 +6,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// #include <hw.c>  // TODO include here the firmware libs which contain the SPI functions
+
+/*
+* SPI_send is the function that the user need to make depending on its device
+* Important, this function is for a 3-wire SPI, the communication does not change the Chip Select
+* Count is the number of words (8 bit) to be sent and TxBuf is the transmission buffer pointer, RxBuf is the pointer of the RxBuffer, where the data is written
+*/
+extern SPI_send (uint8_t count, uint8t *TxBuf, uint8_t *RxBuf);  
+
 //SPI command defines
 #define nrf24l01_R_REGISTER		0x00
 #define nrf24l01_W_REGISTER		0x20
