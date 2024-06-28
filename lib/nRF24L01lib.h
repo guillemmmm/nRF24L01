@@ -25,7 +25,7 @@ extern void nRF24L01_CE(bool state);
 /*
  *  Timer function (each tick 100us)
 */
-extern delay100us(uint32_t ticks);
+extern void delay100us(uint32_t ticks);
 
 //SPI command defines
 #define nrf24l01_R_REGISTER		0x00
