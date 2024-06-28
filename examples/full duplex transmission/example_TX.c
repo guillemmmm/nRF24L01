@@ -1,5 +1,5 @@
 /* 
- *  One direction transmission example (master TX)
+ *  FULL DUPLEX transmission example (master TX)
  *	by Guillem Prenafeta (UB 2024)
  *
 */
@@ -58,38 +58,40 @@ uint8_t payloadRX[32];
 void main()
 {
 
-	init_HW(); //init_all
+    init_HW(); //init_all
 
-	nRF24L01_CE(false); //set CE to disable
-	nRF24L01_CSN(true); //SPI disable
+    nRF24L01_CE(false); //set CE to disable
+    nRF24L01_CSN(true); //SPI disable
 
-	RADIOint = false;
+    RADIOint = false;
 
+    nRF24L01_init(); //we use pipe0 communicaiton, default adress
+    nRF24L01_powerUP(PTXmode); //TX mode
 
-	while(1)
-	{
+    while(1)
+    {
 
-		//missatge
-		char array[] = "HOLA MUNDO"
-		nRF24L01_write_tx_payload_PTX((uint8_t*)array, sizeof(array), true); //enviem
-		while(RADIOint==false){ //esperem int
-		}
-		RADIOint=false;
-		uint8_t status = nRF24L01_nop();
-		if((status&nrf24l01_STATUS_TX_DS)==nrf24l01_STATUS_TX_DS){ //si es que s'ha enviat correctament
-			//llegim missatge
-			do{
+        //missatge
+        char array[] = "HOLA MUNDO"
+        nRF24L01_write_tx_payload_PTX((uint8_t*)array, sizeof(array), true); //enviem
+        while(RADIOint==false){ //esperem int
+        }
+        RADIOint=false;
+        uint8_t status = nRF24L01_nop();
+        if((status&nrf24l01_STATUS_TX_DS)==nrf24l01_STATUS_TX_DS){ //si es que s'ha enviat correctament
+            //llegim missatge
+            do{
                 nRF24L01_payload_width(&payloadRXLEN);
                 nRF24L01_read_rx_payload(payloadRX, payloadRXLEN); //i fem processament
             }while(!nRF24L01_FIFO_RX_empty()); //mentres estigui plena (quan buida passa a true)
             //ja tenim les dades
-    	} else if((status&nrf24l01_STATUS_MAX_RT)==nrf24l01_STATUS_MAX_RT){//error de transmissio s'haura de torna a enviar
-    		__nop();
-    	}
+        } else if((status&nrf24l01_STATUS_MAX_RT)==nrf24l01_STATUS_MAX_RT){//error de transmissio s'haura de torna a enviar
+            __nop();
+        }
 
 
-		delay100us(100); //10ms
-	}
+        delay100us(100); //10ms
+    }
 }
 
 

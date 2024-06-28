@@ -22,6 +22,11 @@ extern void SPI_send (uint8_t count, uint8t *TxBuf, uint8_t *RxBuf);
 extern void nRF24L01_CSN(bool state);
 extern void nRF24L01_CE(bool state);
 
+/*
+ *  Timer function (each tick 100us)
+*/
+extern delay100us(uint32_t ticks);
+
 //SPI command defines
 #define nrf24l01_R_REGISTER		0x00
 #define nrf24l01_W_REGISTER		0x20
