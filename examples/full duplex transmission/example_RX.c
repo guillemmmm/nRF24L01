@@ -84,7 +84,7 @@ void main()
 		if((status&nrf24l01_STATUS_TX_DS)==nrf24l01_STATUS_TX_DS){ //si es que s'ha enviat correctament
 			//llegim missatge
 			do{
-                nRF24L01_payload_width(&payloadRXLEN);
+                nRF24L01_payload_width(&payloadRXLEN); //obtenim longitud del missatge ja que es variable
                 nRF24L01_read_rx_payload(payloadRX, payloadRXLEN); //i fem processament
             }while(!nRF24L01_FIFO_RX_empty()); //mentres estigui plena (quan buida passa a true)
             //ja tenim les dades
@@ -187,39 +187,37 @@ void ISRtimerDelay(void)
     TCount++;
 }
 
+//SSI function without using interrupts
 void SPI_send(uint8_t count, uint8_t * dataout, uint8_t * datain)
 {
-	bool rec = true;
-    if(datain==NULL){
-        rec=false;
-    }
-    uint8_t i,k,j;
-    j=0;
-    while(1){
-        i=0;
-        while(SSIDataPutNonBlocking(SSI2_BASE, *(dataout+i+j))) //omplim la TXFIFO
-        {
-            i++;
-            if(((i+j)>=count||(i>=8))){
-                break;
-            }
-        }
-        //s'ha omplert TX FIFO
-        //esperem a que es buidi
+    uint8_t countR = 0;
+    uint32_t var;
+
+    while(countR<count){
+        SSIDataPutNonBlocking(SSI2_BASE, *(dataout+countR)); //posem la dada
         while((HWREG(SSI2_BASE + SSI_O_SR) & SSI_SR_BSY)); //esperem a que es buidi Tx
-        uint32_t var;
-        uint32_t *RxPointer;
-        for (k=0;k<i;k++){
-            if(rec){
-                RxPointer=(uint32_t*)&(*(datain+k+j));
-                SSIDataGetNonBlocking(SSI2_BASE, RxPointer);
-            } else{
-                SSIDataGetNonBlocking(SSI2_BASE, &var);
-            }
+        if(datain==NULL){
+            SSIDataGetNonBlocking(SSI2_BASE, &var);
+        } else{
+            SSIDataGetNonBlocking(SSI2_BASE, (uint32_t*)&(*(datain+countR)));
         }
-        if((j+i)>=count){ //paraules enviades
-            break;
-        }
-        j=j+i; //si reiniciem bucle hem enviat 8 paraules
+    }
+}
+
+void nRF24L01_CE(bool state)
+{
+    if(state){
+        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, GPIO_PIN_6);
+    } else{
+        GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);
+    }
+}
+
+void nRF24L01_CSN(bool state)
+{
+    if(state){
+        GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, GPIO_PIN_3);
+    } else{
+        GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_3, 0);
     }
 }
