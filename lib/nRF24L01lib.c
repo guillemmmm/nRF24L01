@@ -28,16 +28,6 @@ void nRF24L01_init(void)
 	data=nrf24l01_EN_AA_ENAA_P0;
 	nRF24L01_writeReg(nrf24l01_EN_AA, &data, 1); //configurem pipe 0 de auto AA
 
-	data=0;
-	nRF24L01_readReg(nrf24l01_EN_AA, &data, 1); //configurem pipe 0 de auto AA
-
-#if defined(UARTdebug)
-	if(data==nrf24l01_EN_AA_ENAA_P0){
-	    write("nRF24 configurada correctament", true);
-	} else{
-	    write("Error configuracio nRF24", true);
-	}
-#endif
 
 	data=nrf24l01_EN_RXADDR_ERX_P0;
 	nRF24L01_writeReg(nrf24l01_EN_RXADDR, &data, 1); //configurem adress recepcio PIPE0
@@ -65,10 +55,6 @@ void nRF24L01_init(void)
 
 	data=(0x01<<1)|(0x01<<2);
 	nRF24L01_writeReg(nrf24l01_FEATURE, &data , 1);  //enable DYNPD i Payload ACK
-
-	//proves mirem que hem escrit algo be
-	data=0;
-	nRF24L01_readReg(nrf24l01_FEATURE, &data , 1);
 
 
 	data=0x01;
