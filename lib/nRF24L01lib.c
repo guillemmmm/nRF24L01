@@ -1,9 +1,20 @@
-/* nRF24L01 library by Guillem Prenafeta */
+/*
+ * ------------------------------------------------------------
+ * Author: Guillem Prenafeta (UB)
+ * Modification Date: June 2024
+ * License: GNU General Public License (GPL)
+ * ------------------------------------------------------------
+ * Description:
+ * This is a short library to control the nRF24L01 radio module. 
+ * It is ideally suited for full duplex communication using the 
+ * protocol created by the manufacturer Nordic, Enhanced Shockburst.
+ *
+ * The GPL license allows free distribution and modification
+ * of the software, as long as the same license is maintained
+ * in derivative versions.
+ * ------------------------------------------------------------
+ */
 
-/* SPI library (Library provided by the user micrcontroller). Important functions
-*
-*	SPI_send (uint8_t count, uint8t *TxBuf, uint8_t *RxBuf);
-*/
 #include "nRF24L01lib.h"
 
 #define RF_CH 0x07 // RF Chanel, to choose by the user

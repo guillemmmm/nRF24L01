@@ -1,8 +1,17 @@
-/* 
- *  FULL DUPLEX transmission example (slave RX)
- *	by Guillem Prenafeta (UB 2024)
+/*
+ * ------------------------------------------------------------
+ * Author: Guillem Prenafeta (UB)
+ * Modification Date: June 2024
+ * License: GNU General Public License (GPL)
+ * ------------------------------------------------------------
+ * Description:
+ * FULL DUPLEX slave code example.
  *
-*/
+ * The GPL license allows free distribution and modification
+ * of the software, as long as the same license is maintained
+ * in derivative versions.
+ * ------------------------------------------------------------
+ */
 
 #include <stdbool.h>
 #include <stdint.h>

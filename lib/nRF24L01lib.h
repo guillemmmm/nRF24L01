@@ -1,4 +1,20 @@
-/* nRF24L01+ lib made by Guillem Prenafeta */
+/*
+ * ------------------------------------------------------------
+ * Author: Guillem Prenafeta (UB)
+ * Modification Date: June 2024
+ * License: GNU General Public License (GPL)
+ * ------------------------------------------------------------
+ * Description:
+ * This is a short library to control the nRF24L01 radio module. 
+ * It is ideally suited for full duplex communication using the 
+ * protocol created by the manufacturer Nordic, Enhanced Shockburst.
+ *
+ * The GPL license allows free distribution and modification
+ * of the software, as long as the same license is maintained
+ * in derivative versions.
+ * ------------------------------------------------------------
+ */
+
 
 #ifndef _NRF24lib_H_
 #define _NRF24lib_H_
