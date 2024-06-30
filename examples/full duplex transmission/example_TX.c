@@ -99,6 +99,7 @@ void main()
         }
 
 
+        nRF24L01_clear_IRQ();
         delay100us(100); //10ms
     }
 }

@@ -99,7 +99,8 @@ void main()
             //ja tenim les dades
     		
     		nRF24L01_write_tx_payload_PRX((uint8_t*)array, sizeof(array), 0); //pipe 0 //posem resposta
-	}
+		}	
+		nRF24L01_clear_IRQ();
 }
 
 
