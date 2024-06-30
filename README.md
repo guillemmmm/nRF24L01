@@ -6,3 +6,5 @@ It is highly recommended to read the nRF24L01 [user guide](https://www.sparkfun.
 If you are not very keen on reading user guides you can go directly to page 47 to understand the different instructions to make the module work.
 
 To operate the module, it can be used as a simple transmitter or receiver (only one of them). However, if a duplex (two-way  data transmission) channel is required, it is recommended to read page 26 to understand the **Enhanced ShockBurst** protocol devoloped by **Nordic**.
+
+In the **lib** folder you'll find the library to work with the nRF24L01 module. And in the **examples** folder a full duplex communication is developed.
