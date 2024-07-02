@@ -284,29 +284,84 @@ extern void delay100us(uint32_t ticks);
 #define RTXmode 0x03
 #define PTXmode 0x04
 
-//void nRF24L01_CE(bool state); //functions provided by SPI lib
-//void nRF24L01_CSN(bool state);
+// ******** FUNCTIONS ******* //
 
-//Librery to configure nRF24L01
+
+/*
+ * This function configures the registers of nRF24 module
+ * setting the ShockBurst functionalities, the RF channel,
+ * the adress and more.
+ */
 void nRF24L01_init (void);
 
+/*
+ * This two function turns on/off the module. It have to be
+ * called after configuration and it determines if the module
+ * acts as a transmitter (master) or receiver (slave), however
+ * thanks to the ShockBurst protocol, the receiver(slave) can
+ * transmit messages by putting them on the acknowledge payload.
+ */
 void nRF24L01_powerUP(uint8_t mode); //mode
 void nRF24L01_powerDOWN(void);
 
-//SPI commands defined by the spec
-//all functions return the STATUS register
+//all the next functions return the STATUS register
+
+/*
+ * This two functions make a write/read operation into the module registers
+ */
 uint8_t nRF24L01_writeReg(uint8_t regnumber, uint8_t * data, uint8_t len);
 uint8_t nRF24L01_readReg(uint8_t regnumber, uint8_t * data, uint8_t len);
+
+/*
+ * This function writes the message to be send by the transmitter, if 
+ * bool transmit is true, then the message will be sent after executing this function
+ * (Important) Only for master (transmitter) mode
+ */
 uint8_t nRF24L01_write_tx_payload_PTX(uint8_t * data, uint8_t len, bool transmit);
+
+/*
+ * Whether you are the master or the slave, this function is used to read 
+ * the message received by the radio module.
+*/
 uint8_t nRF24L01_read_rx_payload(uint8_t * data, uint8_t len);
+
+/*
+ *This two functions send the instruction to clear the FIFOs
+*/
 uint8_t nRF24L01_flush_tx(void);
 uint8_t nRF24L01_flush_rx(void);
+
+/*
+ * This function can be used te send the same message as before
+*/
 uint8_t nRF24L01_reuse_tx_pl(void);
+
+/*
+ * This function is important when working with variable message sizes. 
+ * It tells us the length of the message received.
+*/
 uint8_t nRF24L01_payload_width(uint8_t *data); 
+
+/*
+ * This function writes the message that is sent when the receiver
+ * receives a new message. This data will be sent with the acknowledge packet.
+ * (Important) Only for slave (receiver) mode
+*/
 uint8_t nRF24L01_write_tx_payload_PRX(uint8_t * data, uint8_t len, uint8_t pipeline);
+
+/*
+ * No - operation instruction. Useful to read the STATUS register
+*/
 uint8_t nRF24L01_nop(void);
+
+/*
+ * Function to transmit the data inside the TX FIFO
+*/
 void nRF24L01_transmit(void);
 
+/*
+ * These functions indicates the STATUS of the TX/RX FIFOs
+*/
 bool nRF24L01_FIFO_RX_empty(void);
 bool nRF24L01_FIFO_RX_full(void);
 bool nRF24L01_FIFO_TX_empty(void);
@@ -317,6 +372,9 @@ bool nRF24L01_FIFO_TX_full(void);
 //pero a nivell de codi podem mirar ja certs registres
 
 
+/*
+ * In order to clear the module interrupts
+*/
 void nRF24L01_clear_IRQ(void);
 
 #endif
